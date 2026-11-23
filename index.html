@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="إنجاز - تطبيق عربي بسيط واحترافي لإدارة المهام اليومية">
+  <title>إنجاز | إدارة المهام</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="auth-screen" id="authScreen">
+    <section class="auth-card">
+      <div class="brand-mark">إ</div>
+      <p class="eyebrow">مساحتك للتركيز والإنجاز</p>
+      <h1>مرحباً بك في إنجاز</h1>
+      <p class="muted auth-description">نظّم يومك، رتّب أولوياتك، وأنجز أهدافك خطوة بخطوة.</p>
+
+      <div class="auth-tabs">
+        <button class="tab active" id="loginTab" type="button">تسجيل الدخول</button>
+        <button class="tab" id="registerTab" type="button">إنشاء حساب</button>
+      </div>
+
+      <form id="authForm">
+        <label for="authName" id="nameLabel" class="hidden">الاسم</label>
+        <input id="authName" class="hidden" type="text" placeholder="اكتب اسمك" autocomplete="name">
+
+        <label for="authEmail">البريد الإلكتروني</label>
+        <input id="authEmail" type="email" placeholder="name@example.com" autocomplete="email" required>
+
+        <label for="authPassword">كلمة المرور</label>
+        <input id="authPassword" type="password" placeholder="أدخل كلمة المرور" minlength="4" autocomplete="current-password" required>
+
+        <p class="form-message" id="authMessage" role="alert"></p>
+        <button class="btn primary full" id="authSubmit" type="submit">دخول إلى حسابي</button>
+      </form>
+      <p class="auth-note">نسخة تجريبية: الحسابات محفوظة محلياً في هذا المتصفح فقط.</p>
+    </section>
+  </main>
+
+  <div class="app hidden" id="appScreen">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="إنجاز">
+        <span class="brand-mark small">إ</span>
+        <span><strong>إنجاز</strong><small>إدارة مهامك بذكاء</small></span>
+      </a>
+
+      <div class="side-section">
+        <p class="side-title">القائمة الرئيسية</p>
+        <button class="nav-item active" data-filter="all"><span>▦</span> كل المهام <b id="allCount">0</b></button>
+        <button class="nav-item" data-filter="today"><span>◷</span> مهام اليوم</button>
+        <button class="nav-item" data-filter="active"><span>◌</span> قيد التنفيذ</button>
+        <button class="nav-item" data-filter="completed"><span>✓</span> مكتملة</button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <span>✦ تذكير اليوم</span>
+          <p>ابدأ بمهمة صغيرة، فكل إنجاز كبير يبدأ بخطوة.</p>
+        </div>
+        <button class="logout-btn" id="logoutBtn">↪ تسجيل الخروج</button>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <p class="muted" id="todayLabel"></p>
+          <h2 id="welcomeTitle">أهلاً بك 👋</h2>
+        </div>
+        <div class="user-chip"><span class="avatar" id="userAvatar">م</span><span id="userName">مستخدم</span></div>
+      </header>
+
+      <section class="welcome-banner">
+        <div>
+          <p class="banner-kicker">مساحة إنجازك اليومية</p>
+          <h1>خطّط ليومك، واصنع إنجازك.</h1>
+          <p>رتّب مهامك حسب الأولوية وتابع تقدمك بكل سهولة.</p>
+        </div>
+        <div class="banner-art" aria-hidden="true">✦</div>
+      </section>
+
+      <section class="stats-grid" aria-label="إحصائيات المهام">
+        <article class="stat-card"><span class="stat-icon violet">▦</span><p>إجمالي المهام</p><strong id="statTotal">0</strong></article>
+        <article class="stat-card"><span class="stat-icon orange">◷</span><p>قيد التنفيذ</p><strong id="statActive">0</strong></article>
+        <article class="stat-card"><span class="stat-icon green">✓</span><p>مكتملة</p><strong id="statDone">0</strong></article>
+        <article class="stat-card"><span class="stat-icon blue">◎</span><p>نسبة الإنجاز</p><strong id="statRate">0%</strong></article>
+      </section>
+
+      <section class="task-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">قائمة العمل</p><h2 id="listTitle">كل المهام</h2></div>
+          <button class="btn primary" id="openTaskModal">＋ إضافة مهمة</button>
+        </div>
+
+        <div class="toolbar">
+          <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث عن مهمة..."></div>
+          <select id="priorityFilter" aria-label="تصفية حسب الأولوية">
+            <option value="all">كل الأولويات</option>
+            <option value="high">مرتفعة</option>
+            <option value="medium">متوسطة</option>
+            <option value="low">منخفضة</option>
+          </select>
+        </div>
+
+        <div class="task-list" id="taskList"></div>
+        <div class="empty-state hidden" id="emptyState"><span>✧</span><h3>لا توجد مهام هنا</h3><p>أضف مهمة جديدة وابدأ رحلتك نحو الإنجاز.</p></div>
+      </section>
+      <footer>© <span id="year"></span> إنجاز — صُمم لتنظيم يومك بكل بساطة.</footer>
+    </section>
+  </div>
+
+  <dialog class="task-dialog" id="taskDialog">
+    <form id="taskForm" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">خطوة جديدة نحو الإنجاز</p><h2 id="dialogTitle">إضافة مهمة</h2></div><button class="icon-btn" id="closeTaskModal" type="button" aria-label="إغلاق">×</button></div>
+      <label for="taskTitle">عنوان المهمة</label>
+      <input id="taskTitle" maxlength="100" placeholder="مثال: مراجعة درس الكيمياء" required>
+      <label for="taskDescription">التفاصيل (اختياري)</label>
+      <textarea id="taskDescription" rows="3" maxlength="500" placeholder="اكتب تفاصيل تساعدك على تذكر المهمة..."></textarea>
+      <div class="form-row">
+        <div><label for="taskDate">تاريخ الإنجاز</label><input id="taskDate" type="date"></div>
+        <div><label for="taskPriority">الأولوية</label><select id="taskPriority"><option value="medium">متوسطة</option><option value="high">مرتفعة</option><option value="low">منخفضة</option></select></div>
+      </div>
+      <p class="form-message" id="taskMessage" role="alert"></p>
+      <div class="dialog-actions"><button class="btn secondary" id="cancelTask" type="button">إلغاء</button><button class="btn primary" type="submit">حفظ المهمة</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
